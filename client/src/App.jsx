@@ -69,7 +69,7 @@ export default function App() {
         </aside>
 
         {/* Map */}
-        <main className="flex-1 overflow-hidden">
+        <main className="relative flex-1 overflow-hidden">
           {isLoading && (
             <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/60">
               <div className="rounded-lg bg-white px-6 py-4 shadow-lg text-sm text-gray-700">

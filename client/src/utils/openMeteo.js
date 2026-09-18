@@ -1,8 +1,12 @@
 const BASE = 'https://api.open-meteo.com/v1/forecast';
 
 export async function fetchWeatherAt(lat, lng, arrivalTimeMs) {
+  // Fetch a two-day window (UTC date and the next day) so timezone offsets
+  // never push the arrival hour outside the returned range.
   const date = new Date(arrivalTimeMs);
-  const dateStr = date.toISOString().slice(0, 10);
+  const startDate = date.toISOString().slice(0, 10);
+  const nextDay = new Date(date.getTime() + 86400000);
+  const endDate = nextDay.toISOString().slice(0, 10);
 
   const params = new URLSearchParams({
     latitude: lat,
@@ -18,8 +22,8 @@ export async function fetchWeatherAt(lat, lng, arrivalTimeMs) {
     temperature_unit: 'fahrenheit',
     windspeed_unit: 'mph',
     timezone: 'auto',
-    start_date: dateStr,
-    end_date: dateStr,
+    start_date: startDate,
+    end_date: endDate,
   });
 
   const res = await fetch(`${BASE}?${params}`);
