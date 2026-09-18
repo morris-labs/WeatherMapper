@@ -18,20 +18,20 @@ echo "==> Packaging source..."
 git archive --format=tar HEAD | gzip > /tmp/weathermapper.tar.gz
 
 echo "==> Shipping to ${EC2_HOST}..."
-scp -i "$SSH_KEY" /tmp/weathermapper.tar.gz ec2-user@"${EC2_HOST}":/tmp/
+scp -i "$SSH_KEY" /tmp/weathermapper.tar.gz "${EC2_HOST}":/tmp/
 
 echo "==> Extracting on remote..."
-ssh -i "$SSH_KEY" ec2-user@"${EC2_HOST}" \
+ssh -i "$SSH_KEY" "${EC2_HOST}" \
   "mkdir -p ${REMOTE_DIR} && tar -xzf /tmp/weathermapper.tar.gz -C ${REMOTE_DIR} && rm /tmp/weathermapper.tar.gz"
 
 echo "==> Installing dependencies and building..."
-ssh -i "$SSH_KEY" ec2-user@"${EC2_HOST}" \
+ssh -i "$SSH_KEY" "${EC2_HOST}" \
   "cd ${REMOTE_DIR}/client && npm install && VITE_BASE_PATH=/weathermapper/ npm run build"
 
 echo "==> Reloading nginx..."
 # routemapper.conf already includes weathermapper.conf (one-time setup);
 # reload picks up any changes to the included file.
-ssh -i "$SSH_KEY" ec2-user@"${EC2_HOST}" \
+ssh -i "$SSH_KEY" "${EC2_HOST}" \
   "sudo nginx -t && sudo systemctl reload nginx"
 
 echo "==> Done. https://morrislabs.app/weathermapper/"
