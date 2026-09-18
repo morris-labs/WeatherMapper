@@ -43,6 +43,16 @@
 **Cause:** Open-Meteo fetch failed for that coordinate (rate limit, bad lat/lng, or network).
 **Behavior:** Each waypoint's weather fetch is wrapped in a try/catch; failure degrades gracefully to `weather: null`. The route and other waypoints are unaffected.
 
+### Map didn't zoom/pan to fit the route (first browser test)
+**Symptom:** Markers showed in a rough horizontal line at the default US center zoom because the map never fitted to the route bounds.
+**Cause:** `FitBounds` used `useMap()` + `useEffect([map, bounds])`, which has a subtle timing race — `map` resolves from context asynchronously and the effect sometimes fired before the instance was ready.
+**Fix:** Removed `FitBounds` entirely. The `Map` component is now keyed on `overviewPolyline` so a new route forces a remount, and `defaultBounds` is passed so the fresh map loads already fitted to the route.
+
+### Left panel controls unresponsive after route load (first browser test)
+**Symptom:** Clicking form controls (add stop, change inputs, recalculate) had no effect after the waypoint list appeared.
+**Cause:** The form had no `flex-shrink-0`, so the waypoint list's `flex-1` consumed all available height, collapsing the form to zero height and making its controls unclickable. The waypoint list itself also lacked a height anchor for its `overflow-y-auto` to work against.
+**Fix:** Added `flex-shrink-0` to the form, `min-h-0` to the waypoint container, and `h-full` to `WaypointSidebar`'s root div.
+
 ### Map markers overlap at the start of a long route
 **Symptom:** Departure marker and first auto waypoint sit on top of each other.
 **Cause:** First auto waypoint is placed at `intervalMinutes` from departure, which may be physically close if the route starts slowly (city traffic).
