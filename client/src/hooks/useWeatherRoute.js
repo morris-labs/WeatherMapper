@@ -35,7 +35,7 @@ export function useWeatherRoute() {
 
       const leaveTimeMs = new Date(leaveTime).getTime();
       const entered = buildEnteredStops(route.legs, leaveTimeMs);
-      const auto = sampleAutoWaypoints(route.legs, leaveTimeMs, intervalMinutes);
+      const auto = sampleAutoWaypoints(route.legs, leaveTimeMs, intervalMinutes, route.overviewPolyline);
       const merged = mergeWaypoints(entered, auto);
 
       // Fetch weather for all waypoints concurrently.
