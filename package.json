@@ -1,0 +1,8 @@
+{
+  "name": "weathermapper",
+  "private": true,
+  "scripts": {
+    "dev": "cd client && npm run dev",
+    "install:all": "cd client && npm install"
+  }
+}
