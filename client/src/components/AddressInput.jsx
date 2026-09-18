@@ -60,8 +60,26 @@ export function AddressInput({ value, onChange, placeholder, onRemove, canRemove
   }
 
   function handleBlur() {
-    // Delay so click on a prediction fires before blur closes the dropdown.
-    setTimeout(() => setOpen(false), 150);
+    // Delay so a click on a prediction fires before blur closes the dropdown.
+    setTimeout(() => {
+      setOpen(false);
+      // Propagate whatever the user typed if they didn't pick a prediction.
+      if (query.trim() && query.trim() !== value) {
+        onChange(query.trim());
+      }
+    }, 150);
+  }
+
+  function handleKeyDown(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      setOpen(false);
+      setPredictions([]);
+      if (query.trim()) onChange(query.trim());
+    }
+    if (e.key === 'Escape') {
+      setOpen(false);
+    }
   }
 
   function handleFocus() {
@@ -78,6 +96,7 @@ export function AddressInput({ value, onChange, placeholder, onRemove, canRemove
         onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        onKeyDown={handleKeyDown}
         placeholder={placeholder}
         className="flex-1 rounded border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
       />
