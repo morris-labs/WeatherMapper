@@ -13,11 +13,10 @@
 - .env with VITE_GOOGLE_MAPS_BROWSER_KEY added by user
 
 ## Next
-- [ ] Smoke-test in browser: enter two stops, check route + weather markers appear
-- [ ] Verify auto waypoints appear between entered stops
-- [ ] Check waypoint cards show correct arrival times
+- [ ] Smoke-test at https://morrislabs.app/weathermapper/ once Google Maps key
+      referrer allowlist propagates (localhost:*/* was just added)
+- [ ] Verify auto waypoints, arrival times, and weather cards in browser
 
 ## Blockers / decisions pending
-- Chrome browser extension not connected in this environment -- cannot drive browser
-  directly. User must smoke-test at http://localhost:5174 (currently running).
-  Two code-review bugs found and fixed before browser test (see troubleshooting.md).
+- Chrome browser extension not connected in dev environment -- user must test.
+- Map may still not load if key allowlist hasn't propagated yet (~5 min).

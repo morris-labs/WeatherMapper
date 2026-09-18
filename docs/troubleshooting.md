@@ -19,6 +19,13 @@
 
 ---
 
+### nginx include outside server block (first deploy)
+**Symptom:** `nginx -t` failed with `"location" directive is not allowed here`.
+**Cause:** WeatherMapper's `weathermapper.conf` contains bare `location` blocks. Dropping it in `/etc/nginx/conf.d/` as a standalone file makes nginx parse it at the http context level, where `location` is invalid. All locations for `morrislabs.app` must live inside the single ssl server block in `routemapper.conf`.
+**Fix:** Wrote `routemapper.conf` directly with the WeatherMapper `include` inside the server block. Future deploys via `deploy.sh` only rebuild static assets and reload nginx -- the include line is already in place.
+
+---
+
 ## Patterns to watch for
 
 ### Autocomplete dropdown clipped

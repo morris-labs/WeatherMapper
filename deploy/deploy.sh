@@ -29,6 +29,8 @@ ssh -i "$SSH_KEY" ec2-user@"${EC2_HOST}" \
   "cd ${REMOTE_DIR}/client && npm install && VITE_BASE_PATH=/weathermapper/ npm run build"
 
 echo "==> Reloading nginx..."
+# routemapper.conf already includes weathermapper.conf (one-time setup);
+# reload picks up any changes to the included file.
 ssh -i "$SSH_KEY" ec2-user@"${EC2_HOST}" \
   "sudo nginx -t && sudo systemctl reload nginx"
 

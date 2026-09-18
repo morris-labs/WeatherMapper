@@ -41,18 +41,21 @@ VITE_BASE_PATH=/weathermapper/ npm run build
 
 ### Add the nginx include
 
-In the main nginx site config on the EC2 instance (wherever RouteMapper's
-`include` already lives), add:
+All locations for `morrislabs.app` live in one server block inside
+`/etc/nginx/conf.d/routemapper.conf`. Add the WeatherMapper include
+**inside** the `server { listen 443 ssl; ... }` block, after the last
+RouteMapper location:
 
 ```nginx
-include /opt/weathermapper/deploy/nginx/weathermapper.conf;
+    # WeatherMapper — static site, no backend process.
+    include /opt/weathermapper/deploy/nginx/weathermapper.conf;
+}
 ```
 
 Then test and reload:
 
 ```bash
-sudo nginx -t
-sudo systemctl reload nginx
+sudo nginx -t && sudo systemctl reload nginx
 ```
 
 ## Deploying a change
