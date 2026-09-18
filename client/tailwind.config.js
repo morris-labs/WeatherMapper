@@ -4,5 +4,11 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      addUtilities({
+        '.safe-area-bottom': { 'padding-bottom': 'env(safe-area-inset-bottom, 0)' },
+      });
+    },
+  ],
 };
