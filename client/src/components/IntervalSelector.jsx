@@ -1,4 +1,6 @@
 const OPTIONS = [
+  { value: 5,   label: 'Every 5 min' },
+  { value: 15,  label: 'Every 15 min' },
   { value: 30,  label: 'Every 30 min' },
   { value: 60,  label: 'Every 1 hour' },
   { value: 90,  label: 'Every 90 min' },

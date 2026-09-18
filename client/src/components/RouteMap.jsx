@@ -52,7 +52,7 @@ export function RouteMap({ waypoints, overviewPolyline, bounds }) {
       defaultZoom={4}
       gestureHandling="greedy"
       disableDefaultUI={false}
-      className="h-full w-full"
+      style={{ height: '100%', width: '100%' }}
     >
       {overviewPolyline && <RoutePolyline encoded={overviewPolyline} />}
       {bounds && <FitBounds bounds={bounds} />}
