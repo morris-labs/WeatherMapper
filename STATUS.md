@@ -13,10 +13,11 @@
 - .env with VITE_GOOGLE_MAPS_BROWSER_KEY added by user
 
 ## Next
-- [ ] Smoke-test at https://morrislabs.app/weathermapper/ once Google Maps key
-      referrer allowlist propagates (localhost:*/* was just added)
-- [ ] Verify auto waypoints, arrival times, and weather cards in browser
+- [ ] Verify left panel scrolls correctly after waypoints load
+- [ ] Verify address free-text entry (city/state) works end-to-end
+- [ ] Polish / UX feedback pass
 
-## Blockers / decisions pending
-- Chrome browser extension not connected in dev environment -- user must test.
-- Map may still not load if key allowlist hasn't propagated yet (~5 min).
+## Done (confirmed working in browser)
+- Route polyline renders on map
+- Weather markers positioned along the route with emoji + temp
+- Weather data fetched and displayed correctly

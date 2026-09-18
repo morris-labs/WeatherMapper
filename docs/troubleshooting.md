@@ -53,6 +53,11 @@
 **Cause:** The form had no `flex-shrink-0`, so the waypoint list's `flex-1` consumed all available height, collapsing the form to zero height and making its controls unclickable. The waypoint list itself also lacked a height anchor for its `overflow-y-auto` to work against.
 **Fix:** Added `flex-shrink-0` to the form, `min-h-0` to the waypoint container, and `h-full` to `WaypointSidebar`'s root div.
 
+### AdvancedMarker renders as floating DOM elements instead of map pins
+**Symptom:** All weather markers appeared in a horizontal line at the top of the map container, not on the route.
+**Cause:** `AdvancedMarkerElement` (and `@vis.gl/react-google-maps`'s `AdvancedMarker` wrapper) requires a map ID registered in Google Cloud Console. Without one, the marker DOM elements are appended to the map container but are not positioned on the map — they render in normal document flow, creating a row at the top.
+**Fix:** Replaced `AdvancedMarker` entirely with imperative `google.maps.Marker` (classic API) created inside a `RouteMarkers` component that uses `useMap()` + `useEffect`, the same pattern used for the polyline. Classic `Marker` has no mapId requirement. SVG data-URI icons preserve the pill styling. Removed `mapId` from the `Map` component since it is no longer needed.
+
 ### Map markers overlap at the start of a long route
 **Symptom:** Departure marker and first auto waypoint sit on top of each other.
 **Cause:** First auto waypoint is placed at `intervalMinutes` from departure, which may be physically close if the route starts slowly (city traffic).
