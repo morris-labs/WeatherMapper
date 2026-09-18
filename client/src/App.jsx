@@ -43,7 +43,7 @@ export default function App() {
             <p className="text-xs text-gray-500">See the weather where you'll be, when you'll be there.</p>
           </header>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4 overflow-y-auto p-4">
+          <form onSubmit={handleSubmit} className="flex-shrink-0 flex flex-col gap-4 overflow-y-auto p-4">
             <StopList stops={stops} onChange={setStops} />
             <LeaveTimePicker value={leaveTime} onChange={setLeaveTime} />
             <IntervalSelector value={intervalMinutes} onChange={setIntervalMinutes} />
@@ -62,7 +62,7 @@ export default function App() {
           </form>
 
           {waypoints.length > 0 && (
-            <div className="flex-1 overflow-hidden border-t border-gray-200">
+            <div className="flex-1 min-h-0 overflow-hidden border-t border-gray-200">
               <WaypointSidebar waypoints={waypoints} />
             </div>
           )}

@@ -6,7 +6,7 @@ export function WaypointSidebar({ waypoints }) {
   let enteredIndex = -1;
 
   return (
-    <div className="flex flex-col gap-2 overflow-y-auto p-3">
+    <div className="flex h-full flex-col gap-2 overflow-y-auto p-3">
       <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-500">
         Waypoints
       </h2>
