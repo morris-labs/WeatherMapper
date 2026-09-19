@@ -4,6 +4,8 @@ import { StopList } from './components/StopList';
 import { LeaveTimePicker } from './components/LeaveTimePicker';
 import { IntervalSelector } from './components/IntervalSelector';
 import { RouteMap } from './components/RouteMap';
+import { Header } from './components/Header';
+import { Footer } from './components/Footer';
 import { useWeatherRoute } from './hooks/useWeatherRoute';
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_BROWSER_KEY;
@@ -34,7 +36,6 @@ function buildShareUrl(stops, leaveTime, intervalMinutes) {
   return `${location.origin}${location.pathname}?${p}`;
 }
 
-// Shared route controls rendered in the sidebar (desktop) and Plan tab (mobile).
 function RouteForm({ stops, setStops, leaveTime, setLeaveTime, intervalMinutes, setIntervalMinutes, onSubmit, isLoading, hasRoute, error, onShare, copied }) {
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4 p-4">
@@ -45,7 +46,8 @@ function RouteForm({ stops, setStops, leaveTime, setLeaveTime, intervalMinutes, 
       <button
         type="submit"
         disabled={isLoading || stops.filter(Boolean).length < 2}
-        className="rounded bg-blue-600 py-2 text-sm font-semibold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+        style={{ backgroundColor: 'var(--ml-accent-fg)', color: '#fff', fontFamily: "'DM Sans', system-ui, sans-serif" }}
+        className="rounded py-2 text-sm font-semibold hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50 transition-opacity"
       >
         {isLoading ? 'Calculating...' : 'Calculate route'}
       </button>
@@ -54,14 +56,15 @@ function RouteForm({ stops, setStops, leaveTime, setLeaveTime, intervalMinutes, 
         <button
           type="button"
           onClick={onShare}
-          className="rounded border border-gray-300 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+          style={{ borderColor: 'var(--ml-border)', color: 'var(--ml-muted)', fontFamily: "'DM Sans', system-ui, sans-serif" }}
+          className="rounded border py-2 text-sm hover:opacity-80 transition-opacity"
         >
           {copied ? '✓ Copied!' : 'Copy share link'}
         </button>
       )}
 
       {error && (
-        <p className="rounded bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>
+        <p className="rounded px-3 py-2 text-sm" style={{ backgroundColor: '#fef2f2', color: '#b91c1c' }}>{error}</p>
       )}
     </form>
   );
@@ -69,9 +72,9 @@ function RouteForm({ stops, setStops, leaveTime, setLeaveTime, intervalMinutes, 
 
 function LoadingOverlay() {
   return (
-    <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/60">
-      <div className="rounded-lg bg-white px-6 py-4 shadow-lg text-sm text-gray-700">
-        Fetching route and weather...
+    <div className="absolute inset-0 z-10 flex items-center justify-center" style={{ backgroundColor: 'rgba(255,255,255,0.65)' }}>
+      <div className="rounded-lg px-6 py-4 shadow-lg text-sm" style={{ backgroundColor: 'var(--ml-surface)', color: 'var(--ml-ink)' }}>
+        Fetching route and weather…
       </div>
     </div>
   );
@@ -88,7 +91,6 @@ export default function App() {
 
   const { status, waypoints, overviewPolyline, bounds, error, calculate } = useWeatherRoute();
 
-  // Auto-calculate when the page loads with shared URL params.
   useEffect(() => {
     const { stops: s, leave: l, interval: i } = urlState;
     if (s && s.length >= 2) {
@@ -96,7 +98,6 @@ export default function App() {
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Switch to the map tab on mobile after a successful calculation.
   useEffect(() => {
     if (status === 'success') setActiveTab('map');
   }, [status]);
@@ -125,75 +126,79 @@ export default function App() {
 
   return (
     <APIProvider apiKey={API_KEY}>
+      <div className="flex flex-col" style={{ height: '100dvh', minHeight: '100dvh' }}>
 
-      {/* ── Desktop layout (md+) ───────────────────────────────────── */}
-      <div className="hidden md:flex h-screen overflow-hidden bg-gray-100">
-        <aside className="flex w-80 flex-shrink-0 flex-col overflow-hidden border-r border-gray-200 bg-white">
-          <header className="flex-shrink-0 border-b border-gray-200 px-4 py-3">
-            <h1 className="text-base font-semibold text-gray-900">WeatherMapper</h1>
-            <p className="text-xs text-gray-500">See the weather where you'll be, when you'll be there.</p>
-          </header>
+        <Header currentApp="weathermapper" />
 
-          <div className="flex-shrink-0 overflow-y-auto">
-            <RouteForm {...formProps} />
-          </div>
-
-        </aside>
-
-        <main className="relative flex-1 overflow-hidden">
-          {isLoading && <LoadingOverlay />}
-          <RouteMap waypoints={waypoints} overviewPolyline={overviewPolyline} bounds={bounds} />
-        </main>
-      </div>
-
-      {/* ── Mobile layout (<md) ────────────────────────────────────── */}
-      <div className="flex md:hidden h-screen flex-col overflow-hidden bg-white">
-        <header className="flex-shrink-0 border-b border-gray-200 px-4 py-3">
-          <h1 className="text-base font-semibold text-gray-900">WeatherMapper</h1>
-          <p className="text-xs text-gray-500">See the weather where you'll be, when you'll be there.</p>
-        </header>
-
-        {/* Tab content */}
-        <div className="flex-1 min-h-0 overflow-hidden">
-          {activeTab === 'form' && (
-            <div className="h-full overflow-y-auto">
+        {/* ── Desktop layout (md+) ───────────────────────────────────── */}
+        <div className="hidden md:flex flex-1 min-h-0 overflow-hidden">
+          <aside
+            className="flex flex-col w-80 flex-shrink-0 overflow-hidden"
+            style={{ borderRight: '1px solid var(--ml-border)', backgroundColor: 'var(--ml-surface)' }}
+          >
+            <div className="flex-1 min-h-0 overflow-y-auto">
               <RouteForm {...formProps} />
             </div>
-          )}
+            <Footer />
+          </aside>
 
-          {activeTab === 'map' && (
-            <div className="relative h-full">
-              {isLoading && <LoadingOverlay />}
-              <RouteMap waypoints={waypoints} overviewPolyline={overviewPolyline} bounds={bounds} />
-            </div>
-          )}
-
+          <main className="relative flex-1 overflow-hidden">
+            {isLoading && <LoadingOverlay />}
+            <RouteMap waypoints={waypoints} overviewPolyline={overviewPolyline} bounds={bounds} />
+          </main>
         </div>
 
-        {/* Bottom tab bar */}
-        <nav className="flex-shrink-0 border-t border-gray-200 bg-white safe-area-bottom">
-          {[
-            { id: 'form', label: 'Plan', emoji: '📍' },
-            { id: 'map',  label: 'Map',  emoji: '🗺️' },
-          ].map(({ id, label, emoji }) => (
-            <button
-              key={id}
-              type="button"
-              onClick={() => setActiveTab(id)}
-              disabled={id !== 'form' && !hasRoute && !isLoading}
-              className={[
-                'inline-flex w-1/2 flex-col items-center gap-0.5 py-3 text-xs transition-colors',
-                activeTab === id ? 'text-blue-600 font-semibold' : 'text-gray-500 hover:text-gray-700',
-                'disabled:opacity-30',
-              ].join(' ')}
-            >
-              <span className="text-lg leading-none">{emoji}</span>
-              <span>{label}</span>
-            </button>
-          ))}
-        </nav>
-      </div>
+        {/* ── Mobile layout (<md) ────────────────────────────────────── */}
+        <div className="flex md:hidden flex-1 min-h-0 flex-col overflow-hidden">
 
+          {/* Tab content */}
+          <div className="flex-1 min-h-0 overflow-hidden">
+            {activeTab === 'form' && (
+              <div className="h-full overflow-y-auto flex flex-col" style={{ backgroundColor: 'var(--ml-surface)' }}>
+                <div className="flex-1">
+                  <RouteForm {...formProps} />
+                </div>
+                <Footer />
+              </div>
+            )}
+
+            {activeTab === 'map' && (
+              <div className="relative h-full">
+                {isLoading && <LoadingOverlay />}
+                <RouteMap waypoints={waypoints} overviewPolyline={overviewPolyline} bounds={bounds} />
+              </div>
+            )}
+          </div>
+
+          {/* Bottom tab bar */}
+          <nav
+            className="flex-shrink-0 safe-area-bottom"
+            style={{ borderTop: '1px solid var(--ml-border)', backgroundColor: 'var(--ml-surface)' }}
+          >
+            {[
+              { id: 'form', label: 'Plan', emoji: '📍' },
+              { id: 'map',  label: 'Map',  emoji: '🗺️' },
+            ].map(({ id, label, emoji }) => (
+              <button
+                key={id}
+                type="button"
+                onClick={() => setActiveTab(id)}
+                disabled={id !== 'form' && !hasRoute && !isLoading}
+                className="inline-flex w-1/2 flex-col items-center gap-0.5 py-3 text-xs transition-colors disabled:opacity-30"
+                style={{
+                  color: activeTab === id ? 'var(--ml-accent-fg)' : 'var(--ml-muted)',
+                  fontFamily: "'DM Sans', system-ui, sans-serif",
+                  fontWeight: activeTab === id ? 600 : 400,
+                }}
+              >
+                <span className="text-lg leading-none">{emoji}</span>
+                <span>{label}</span>
+              </button>
+            ))}
+          </nav>
+        </div>
+
+      </div>
     </APIProvider>
   );
 }
