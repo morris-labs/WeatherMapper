@@ -20,11 +20,11 @@
 - Shareable link: "Copy share link" encodes stops/leave/interval in query
   string; page auto-populates and recalculates on load
 - EC2 deploy: static build served by nginx at morrislabs.app/weathermapper/
-- GitHub: pending push (need remote URL)
+- GitHub: https://github.com/morris-labs/WeatherMapper (21 commits pushed)
 
 ## Pending
 
-- [ ] Push to GitHub (no remote set yet — need repo URL)
+- [x] Pushed to GitHub
 - [ ] WaypointSidebar, WaypointCard, WeatherMarker, WeatherIcon components are
       orphaned (sidebar removed in favour of map popups). Keep or delete TBD.
 
