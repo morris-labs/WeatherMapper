@@ -35,6 +35,34 @@
   --ml-border:     #1F3048;
 }
 
+/* Reusable form primitives using brand tokens */
+.ml-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ml-muted);
+}
+
+.ml-input {
+  background-color: var(--ml-surface);
+  border: 1px solid var(--ml-border);
+  border-radius: 6px;
+  color: var(--ml-ink);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.875rem;
+  outline: none;
+  padding: 0.5rem 0.75rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ml-input:focus {
+  border-color: var(--ml-accent-fg);
+  box-shadow: 0 0 0 3px var(--ml-accent-bg);
+}
+
 html, body, #root {
   min-height: 100%;
   margin: 0;

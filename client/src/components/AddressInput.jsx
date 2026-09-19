@@ -98,13 +98,16 @@ export function AddressInput({ value, onChange, placeholder, onRemove, canRemove
         onBlur={handleBlur}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
-        className="flex-1 rounded border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+        className="ml-input flex-1"
       />
       {canRemove && (
         <button
           type="button"
           onClick={onRemove}
-          className="flex-shrink-0 rounded p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+          className="flex-shrink-0 rounded p-1 transition-colors"
+          style={{ color: 'var(--ml-muted)' }}
+          onMouseOver={e => e.currentTarget.style.backgroundColor = 'var(--ml-accent-bg)'}
+          onMouseOut={e => e.currentTarget.style.backgroundColor = 'transparent'}
           aria-label="Remove stop"
         >
           ✕
@@ -115,16 +118,20 @@ export function AddressInput({ value, onChange, placeholder, onRemove, canRemove
         createPortal(
           <ul
             style={dropdownStyle}
-            className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg"
+            style={{ backgroundColor: 'var(--ml-surface)', border: '1px solid var(--ml-border)', borderRadius: '8px', boxShadow: '0 4px 16px rgba(0,0,0,0.10)', overflow: 'hidden' }}
+            className=""
           >
             {predictions.map((p) => (
               <li
                 key={p.placeId}
                 onMouseDown={() => handleSelect(p)}
-                className="cursor-pointer px-3 py-2 text-sm hover:bg-blue-50"
+                className="cursor-pointer px-3 py-2 text-sm"
+                style={{ color: 'var(--ml-ink)', fontFamily: "'DM Sans', system-ui, sans-serif" }}
+                onMouseOver={e => e.currentTarget.style.backgroundColor = 'var(--ml-accent-bg)'}
+                onMouseOut={e => e.currentTarget.style.backgroundColor = 'transparent'}
               >
-                <span className="font-medium text-gray-900">{p.primaryText}</span>
-                <span className="ml-1 text-gray-500">{p.secondaryText}</span>
+                <span className="font-medium">{p.primaryText}</span>
+                <span className="ml-1" style={{ color: 'var(--ml-muted)' }}>{p.secondaryText}</span>
               </li>
             ))}
           </ul>,

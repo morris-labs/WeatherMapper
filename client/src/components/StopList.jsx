@@ -16,9 +16,7 @@ export function StopList({ stops, onChange }) {
 
   return (
     <div className="flex flex-col gap-2">
-      <label className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-        Stops
-      </label>
+      <label className="ml-label">Stops</label>
       {stops.map((stop, i) => (
         <AddressInput
           key={i}
@@ -33,7 +31,10 @@ export function StopList({ stops, onChange }) {
         <button
           type="button"
           onClick={add}
-          className="mt-1 rounded border border-dashed border-gray-300 py-1.5 text-sm text-gray-500 hover:border-blue-400 hover:text-blue-600"
+          className="mt-1 rounded py-1.5 text-sm transition-colors"
+          style={{ border: '1px dashed var(--ml-border)', color: 'var(--ml-muted)', fontFamily: "'DM Sans', system-ui, sans-serif" }}
+          onMouseOver={e => { e.currentTarget.style.borderColor = 'var(--ml-accent-fg)'; e.currentTarget.style.color = 'var(--ml-accent-fg)'; }}
+          onMouseOut={e => { e.currentTarget.style.borderColor = 'var(--ml-border)'; e.currentTarget.style.color = 'var(--ml-muted)'; }}
         >
           + Add stop
         </button>
