@@ -1,23 +1,31 @@
 # WeatherMapper — session status
 
-**Active plan:** plan-weathermapper.md (see /home/prime/.claude/plans/please-look-over-the-noble-wombat.md)
-**Current step:** Testing — first dev-server run
+**Active plan:** plan-weathermapper.md
+**Current state:** Deployed and working
 
 ## Done
-- Initialized git repo on `main` (2 commits)
-- Scaffolded Vite + React + Tailwind client (no server needed)
-- Implemented all utilities: polyline decoder, WMO weather code map, Open-Meteo fetcher, waypoint sampler
-- Implemented all components: AddressInput (portaled autocomplete), StopList, LeaveTimePicker, IntervalSelector, RouteMap (polyline + markers), WeatherMarker, WaypointCard, WaypointSidebar
-- useWeatherRoute hook orchestrates route fetch → waypoint sampling → concurrent weather fetch
-- Production build passes (201 kB JS, 11 kB CSS)
-- .env with VITE_GOOGLE_MAPS_BROWSER_KEY added by user
 
-## Next
-- [ ] Verify left panel scrolls correctly after waypoints load
-- [ ] Verify address free-text entry (city/state) works end-to-end
-- [ ] Polish / UX feedback pass
+- Vite + React 18 + Tailwind CSS client scaffold
+- RouteMapper API integration (route, autocomplete)
+- Open-Meteo weather fetch (temp, feels-like, precip, wind, humidity)
+- Waypoint sampling: entered stops + auto waypoints at configurable intervals
+  (5/15/30/60/90/120 min) along the actual road polyline (not straight-line)
+- Google Maps with route polyline (imperative Polyline API)
+- Weather marker pills on map (emoji + temp); hover/tap opens styled InfoWindow
+  popup with all weather fields including humidity and compass wind direction
+- MorrisLabs design system: --ml-* tokens, Syne/DM Sans/Space Mono fonts,
+  shared Header (with Apps dropdown) and Footer components
+- Mobile layout: two-tab bottom nav (Plan / Map), auto-switches to Map on
+  successful calculation; desktop: fixed sidebar + map
+- Shareable link: "Copy share link" encodes stops/leave/interval in query
+  string; page auto-populates and recalculates on load
+- EC2 deploy: static build served by nginx at morrislabs.app/weathermapper/
+- GitHub: pending push (need remote URL)
 
-## Done (confirmed working in browser)
-- Route polyline renders on map
-- Weather markers positioned along the route with emoji + temp
-- Weather data fetched and displayed correctly
+## Pending
+
+- [ ] Push to GitHub (no remote set yet — need repo URL)
+- [ ] WaypointSidebar, WaypointCard, WeatherMarker, WeatherIcon components are
+      orphaned (sidebar removed in favour of map popups). Keep or delete TBD.
+
+## No active blockers

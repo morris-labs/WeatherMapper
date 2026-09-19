@@ -42,6 +42,8 @@ function makeMarkerIcon(weather, isEntered) {
   };
 }
 
+// InfoWindow content is injected as a raw HTML string inside the Maps DOM,
+// which is isolated from the host page's CSS — inline styles only, no CSS vars.
 function makePopupContent(wp) {
   const info = wp.weather ? getWeatherInfo(wp.weather.weatherCode) : null;
   const w = wp.weather;
@@ -107,6 +109,9 @@ function RoutePolyline({ encoded }) {
   return null;
 }
 
+// Uses classic google.maps.Marker instead of AdvancedMarker because
+// AdvancedMarker requires a registered Cloud Map ID — without one, DOM
+// elements render in document flow rather than on the map.
 function RouteMarkers({ waypoints }) {
   const map = useMap();
   const markersRef = useRef([]);
