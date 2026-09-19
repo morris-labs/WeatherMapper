@@ -18,6 +18,7 @@ export async function fetchWeatherAt(lat, lng, arrivalTimeMs) {
       'weathercode',
       'windspeed_10m',
       'winddirection_10m',
+      'relativehumidity_2m',
     ].join(','),
     temperature_unit: 'fahrenheit',
     windspeed_unit: 'mph',
@@ -46,5 +47,6 @@ export async function fetchWeatherAt(lat, lng, arrivalTimeMs) {
     weatherCode:  h.weathercode[closestIdx],
     windSpeed:    Math.round(h.windspeed_10m[closestIdx]),
     windDir:      h.winddirection_10m[closestIdx],
+    humidity:     h.relativehumidity_2m[closestIdx] ?? null,
   };
 }

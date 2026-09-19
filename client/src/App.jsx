@@ -4,7 +4,6 @@ import { StopList } from './components/StopList';
 import { LeaveTimePicker } from './components/LeaveTimePicker';
 import { IntervalSelector } from './components/IntervalSelector';
 import { RouteMap } from './components/RouteMap';
-import { WaypointSidebar } from './components/WaypointSidebar';
 import { useWeatherRoute } from './hooks/useWeatherRoute';
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_BROWSER_KEY;
@@ -139,11 +138,6 @@ export default function App() {
             <RouteForm {...formProps} />
           </div>
 
-          {hasRoute && (
-            <div className="flex-1 min-h-0 overflow-hidden border-t border-gray-200">
-              <WaypointSidebar waypoints={waypoints} />
-            </div>
-          )}
         </aside>
 
         <main className="relative flex-1 overflow-hidden">
@@ -174,14 +168,6 @@ export default function App() {
             </div>
           )}
 
-          {activeTab === 'weather' && (
-            <div className="h-full overflow-hidden">
-              {hasRoute
-                ? <WaypointSidebar waypoints={waypoints} />
-                : <p className="p-6 text-sm text-gray-500 text-center">Calculate a route to see weather details.</p>
-              }
-            </div>
-          )}
         </div>
 
         {/* Bottom tab bar */}
@@ -189,7 +175,6 @@ export default function App() {
           {[
             { id: 'form', label: 'Plan', emoji: '📍' },
             { id: 'map',  label: 'Map',  emoji: '🗺️' },
-            { id: 'weather', label: 'Weather', emoji: '⛅' },
           ].map(({ id, label, emoji }) => (
             <button
               key={id}
@@ -197,7 +182,7 @@ export default function App() {
               onClick={() => setActiveTab(id)}
               disabled={id !== 'form' && !hasRoute && !isLoading}
               className={[
-                'inline-flex w-1/3 flex-col items-center gap-0.5 py-3 text-xs transition-colors',
+                'inline-flex w-1/2 flex-col items-center gap-0.5 py-3 text-xs transition-colors',
                 activeTab === id ? 'text-blue-600 font-semibold' : 'text-gray-500 hover:text-gray-700',
                 'disabled:opacity-30',
               ].join(' ')}
