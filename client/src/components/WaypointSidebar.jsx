@@ -7,7 +7,7 @@ export function WaypointSidebar({ waypoints }) {
 
   return (
     <div className="flex h-full flex-col gap-2 overflow-y-auto p-3">
-      <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-500">
+      <h2 className="text-sm font-semibold uppercase tracking-wide text-[--ml-muted]">
         Waypoints
       </h2>
       {waypoints.map((wp) => {

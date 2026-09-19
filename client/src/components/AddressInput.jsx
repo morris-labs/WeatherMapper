@@ -117,8 +117,7 @@ export function AddressInput({ value, onChange, placeholder, onRemove, canRemove
       {open && predictions.length > 0 &&
         createPortal(
           <ul
-            style={dropdownStyle}
-            style={{ backgroundColor: 'var(--ml-surface)', border: '1px solid var(--ml-border)', borderRadius: '8px', boxShadow: '0 4px 16px rgba(0,0,0,0.10)', overflow: 'hidden' }}
+            style={{ ...dropdownStyle, backgroundColor: 'var(--ml-surface)', border: '1px solid var(--ml-border)', borderRadius: '8px', boxShadow: '0 4px 16px rgba(0,0,0,0.10)', overflow: 'hidden' }}
             className=""
           >
             {predictions.map((p) => (

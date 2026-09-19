@@ -19,7 +19,7 @@ export function WeatherMarker({ waypoint }) {
         <div
           title={title}
           style={{ whiteSpace: 'nowrap' }}
-          className="flex items-center gap-0.5 rounded-full border-2 border-blue-600 bg-blue-600 px-2 py-0.5 text-xs font-bold text-white shadow-md"
+          className="flex items-center gap-0.5 rounded-full border-2 border-[--ml-accent-fg] bg-[--ml-accent-fg] px-2 py-0.5 text-xs font-bold text-white shadow-md"
         >
           {info && <span>{info.emoji}</span>}
           <span>{temp}</span>
@@ -35,7 +35,7 @@ export function WeatherMarker({ waypoint }) {
       <div
         title={title}
         style={{ whiteSpace: 'nowrap' }}
-        className="flex items-center gap-0.5 rounded-full border border-gray-400 bg-white px-1.5 py-px text-xs font-medium text-gray-700 shadow"
+        className="flex items-center gap-0.5 rounded-full border border-[--ml-border] bg-[--ml-surface] px-1.5 py-px text-xs font-medium text-[--ml-ink] shadow"
       >
         {info && <span style={{ fontSize: '10px' }}>{info.emoji}</span>}
         <span style={{ fontSize: '10px' }}>{temp}</span>
