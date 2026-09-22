@@ -31,8 +31,6 @@ Header, and Footer. Header.jsx and Footer.jsx are implemented locally from it.
 
 ## Pending
 
-- [ ] WaypointSidebar, WaypointCard, WeatherMarker, WeatherIcon are orphaned
-      (sidebar removed in favour of map InfoWindow popups). Keep or delete TBD.
 - [ ] SITE-DESIGN.md lives in this repo temporarily; it might belong in the
       morrislabs.app repo once that project is structured.
 

@@ -107,10 +107,6 @@ client/
       LeaveTimePicker.jsx      — datetime-local input
       IntervalSelector.jsx     — interval options (5/15/30/60/90/120 min)
       RouteMap.jsx             — Google Map, polyline, marker pills, InfoWindow popups
-      WeatherMarker.jsx        — [unused] AdvancedMarker pill (sidebar era)
-      WaypointCard.jsx         — [unused] full waypoint detail card (sidebar era)
-      WaypointSidebar.jsx      — [unused] scrollable card list (sidebar era)
-      WeatherIcon.jsx          — [unused] WMO code → emoji + label (sidebar era)
     hooks/
       useWeatherRoute.js       — orchestrates API calls, holds route+waypoint state
     utils/
